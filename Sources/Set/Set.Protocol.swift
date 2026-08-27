@@ -1,6 +1,5 @@
 public import Hash
 public import Index
-import Set_Primitive
 
 public protocol Membership: ~Copyable {
 
