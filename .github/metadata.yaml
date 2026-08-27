@@ -2,7 +2,7 @@
 # Triaged by AI-assisted bulk pass (2026-04-29).
 description: "Set<S> — an insertion-ordered hash set generic over its storage column, plus the Set.Protocol membership contract and its relational-algebra defaults."
 topics:
-  - primitives
+  - molecules
   - set
 homepage: "https://swift-institute.org"
 readme:

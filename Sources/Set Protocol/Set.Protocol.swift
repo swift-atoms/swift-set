@@ -1,5 +1,5 @@
-public import Hash_Primitives
-public import Index_Primitives
+public import Hash
+public import Index
 import Set_Primitive
 
 public protocol Membership: ~Copyable {

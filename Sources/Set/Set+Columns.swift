@@ -1,14 +1,14 @@
 public import Buffer_Linear_Primitive
 public import Buffer_Primitive
 public import Hash_Indexed_Primitive
-import Hash_Primitives
+import Hash
 import Hash_Table_Primitive
-public import Index_Primitives
+public import Index
 public import Memory_Allocator_Primitive
-public import Memory_Heap_Primitives
+public import Memory_Heap
 public import Ownership_Shared_Primitive
 public import Set_Primitive
-public import Storage_Contiguous_Primitives
+public import Storage_Contiguous
 public import Storage_Primitive
 
 extension __Set where S: ~Copyable {
@@ -84,7 +84,7 @@ extension __Set where S: ~Copyable {
             E, Hash.Indexed<Buffer<Storage<Memory.Allocator<Memory.Heap>>.Contiguous<E>>.Linear>
         >
     {
-        let capacity: Index_Primitives.Index<E>.Count = keepingCapacity ? store.capacity : .zero
+        let capacity: Index.Index<E>.Count = keepingCapacity ? store.capacity : .zero
         self.store = Ownership.Shared(
             Hash.Indexed<Buffer<Storage<Memory.Allocator<Memory.Heap>>.Contiguous<E>>.Linear>(
                 minimumCapacity: capacity

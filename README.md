@@ -1,7 +1,7 @@
-# Set Primitives
+# Set
 
 ![Development Status](https://img.shields.io/badge/status-active--development-blue.svg)
-[![CI](https://github.com/swift-primitives/swift-set-primitives/actions/workflows/ci.yml/badge.svg)](https://github.com/swift-primitives/swift-set-primitives/actions/workflows/ci.yml)
+[![CI](https://github.com/swift-molecules/swift-set/actions/workflows/ci.yml/badge.svg)](https://github.com/swift-molecules/swift-set/actions/workflows/ci.yml)
 
 `Set<S>` — an insertion-ordered hash set generic over its storage **column**. Members live densely in insertion order behind a bucket position-index engine, so `contains` and `insert` are O(1) average-case and iteration follows insertion order. As with the rest of the family, copyability flows from the column: a move-only ordered-hashed column is zero-cost, and a `Shared` column gives copy-on-write value semantics.
 
@@ -21,10 +21,10 @@ The package also defines the `Set` namespace and the `Set.Protocol` membership c
 ## Quick Start
 
 ```swift
-import Set_Primitives
-import Column_Primitives
+import Set
+import Column
 import Hash_Indexed_Primitive
-import Hash_Primitives_Standard_Library_Integration
+import Hash_Standard_Library_Integration
 
 // Move-only by default, over the ordered-hashed column:
 var seen = Set<Hash.Indexed<Column.Heap<Int>>>()
@@ -41,7 +41,7 @@ seen.forEach { print($0) }             // 200, 404 — insertion order
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/swift-primitives/swift-set-primitives.git", branch: "main")
+    .package(url: "https://github.com/swift-molecules/swift-set.git", branch: "main")
 ]
 ```
 
@@ -49,7 +49,7 @@ dependencies: [
 .target(
     name: "App",
     dependencies: [
-        .product(name: "Set Primitives", package: "swift-set-primitives")
+        .product(name: "Set", package: "swift-set")
     ]
 )
 ```
@@ -62,9 +62,9 @@ The package is pre-1.0 — depend on `branch: "main"` until `0.1.0` is tagged. R
 
 | Product | Contents | When to import |
 |---------|----------|----------------|
-| `Set Primitives` | Umbrella — `Set<S>`, the column constructors, the `Set.Protocol` contract, and the conformances | Most consumers |
+| `Set` | Umbrella — `Set<S>`, the column constructors, the `Set.Protocol` contract, and the conformances | Most consumers |
 | `Set Primitive` | The `Set<S>` value type and its column-pinned surface, without the conformances | Move-only / minimal-surface use |
-| `Set Protocol Primitives` | The `Set.Protocol` membership contract (`contains` + `count`) | Authoring a set discipline |
+| `Set Protocol` | The `Set.Protocol` membership contract (`contains` + `count`) | Authoring a set discipline |
 
 ---
 
@@ -82,10 +82,10 @@ The package is pre-1.0 — depend on `branch: "main"` until `0.1.0` is tagged. R
 
 ## Related Packages
 
-- [`swift-set-algebra-primitives`](https://github.com/swift-primitives/swift-set-algebra-primitives) — relational and constructive algebra (`isSubset`, `union`, `intersection`, …) over any `Set.Protocol` conformer.
-- [`swift-set-ordered-primitives`](https://github.com/swift-primitives/swift-set-ordered-primitives) — the order-preserving `Set.Ordered` discipline with positional access.
-- [`swift-hash-primitives`](https://github.com/swift-primitives/swift-hash-primitives) — the `Hash.Key` element-hashing contract set elements conform to.
-- [`swift-column-primitives`](https://github.com/swift-primitives/swift-column-primitives) — the column vocabulary (`Hash.Indexed`, `Column.Heap`, …) the set composes.
+- [`swift-set-algebra`](https://github.com/swift-molecules/swift-set-algebra) — relational and constructive algebra (`isSubset`, `union`, `intersection`, …) over any `Set.Protocol` conformer.
+- [`swift-set-ordered`](https://github.com/swift-molecules/swift-set-ordered) — the order-preserving `Set.Ordered` discipline with positional access.
+- [`swift-hash`](https://github.com/swift-molecules/swift-hash) — the `Hash.Key` element-hashing contract set elements conform to.
+- [`swift-column`](https://github.com/swift-molecules/swift-column) — the column vocabulary (`Hash.Indexed`, `Column.Heap`, …) the set composes.
 
 ---
 

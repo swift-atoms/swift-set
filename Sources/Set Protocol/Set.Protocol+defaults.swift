@@ -1,4 +1,4 @@
-public import Index_Primitives
+public import Index
 
 extension __SetProtocol where Self: ~Copyable {
 
