@@ -1,7 +1,7 @@
-public import Index
+public import Cardinal
 
-extension __SetProtocol where Self: ~Copyable {
+extension Membership where Self: ~Copyable {
 
     @inlinable
-    public var isEmpty: Bool { count == .zero }
+    public var isEmpty: Bool { count == Cardinal(0) }
 }

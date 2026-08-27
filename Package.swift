@@ -19,18 +19,18 @@ let package = Package(
         ),
 
         .library(
-            name: "Set Standard Library Integration",
-            targets: ["Set Standard Library Integration"]
+            name: "Set Apple Foundation Integration",
+            targets: ["Set Apple Foundation Integration"]
         ),
 
         .library(
-            name: "Set Apple Foundation Integration",
-            targets: ["Set Apple Foundation Integration"]
+            name: "Set Test Support",
+            targets: ["Set Test Support"]
         ),
     ],
     dependencies: [
         .package(
-            url: "https://github.com/swift-atoms/swift-index.git",
+            url: "https://github.com/swift-atoms/swift-cardinal.git",
             branch: "main"
         ),
         .package(
@@ -43,30 +43,37 @@ let package = Package(
         .target(
             name: "Set",
             dependencies: [
+                .product(name: "Cardinal", package: "swift-cardinal"),
                 .product(name: "Hash", package: "swift-hash"),
-                .product(name: "Index", package: "swift-index"),
-            ]
-        ),
-
-        .target(
-            name: "Set Standard Library Integration",
-            dependencies: [
-                "Set"
             ]
         ),
 
         .target(
             name: "Set Apple Foundation Integration",
+            dependencies: ["Set"]
+        ),
+
+        .target(
+            name: "Set Test Support",
             dependencies: [
                 "Set",
-                "Set Standard Library Integration",
-            ]
+                .product(
+                    name: "Cardinal Standard Library Integration",
+                    package: "swift-cardinal"
+                ),
+                .product(
+                    name: "Hash Standard Library Integration",
+                    package: "swift-hash"
+                ),
+            ],
+            path: "Tests/Support"
         ),
 
         .testTarget(
             name: "Set Tests",
             dependencies: [
-                "Set"
+                "Set",
+                "Set Test Support",
             ]
         ),
     ],

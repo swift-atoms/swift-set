@@ -1,20 +1,18 @@
 # Set
 
 ![Development Status](https://img.shields.io/badge/status-active--development-blue.svg)
-[![CI](https://github.com/swift-molecules/swift-set/actions/workflows/ci.yml/badge.svg)](https://github.com/swift-molecules/swift-set/actions/workflows/ci.yml)
+[![CI](https://github.com/swift-atoms/swift-set/actions/workflows/ci.yml/badge.svg)](https://github.com/swift-atoms/swift-set/actions/workflows/ci.yml)
 
-`Set<S>` — an insertion-ordered hash set generic over its storage **column**. Members live densely in insertion order behind a bucket position-index engine, so `contains` and `insert` are O(1) average-case and iteration follows insertion order. As with the rest of the family, copyability flows from the column: a move-only ordered-hashed column is zero-cost, and a `Shared` column gives copy-on-write value semantics.
-
-The package also defines the `Set` namespace and the `Set.Protocol` membership contract — the `contains` + `count` vocabulary any set discipline conforms to. Relational and constructive algebra over conformers (`isSubset`, `union`, `intersection`, …) lives in the sibling set-algebra package; the order-preserving discipline with positional access lives in the set-ordered package.
+The minimal set atom: a `Membership` contract for hashable elements and an ownership-neutral `__Set<Store>` carrier for extracted storage seams. `Membership` standardizes `contains`, a `Cardinal` count, and the derived `isEmpty` property without choosing storage, ordering, allocation, or mutation policy.
 
 ---
 
 ## Key Features
 
-- **Insertion-ordered hash set** — O(1) average-case `contains` and `insert`; `forEach` follows insertion order.
-- **Column-generic storage** — `Set<S>` composes the ordered-hashed column; the backing is a type parameter, not a separate type per policy.
-- **Copyability from the column** — move-only by default (zero-cost), opt-in copy-on-write via a `Shared` column.
-- **Membership vocabulary** — `Set.Protocol` (`contains` + `count`) that any type can satisfy, so set algebra composes over your own conformers.
+- **Membership vocabulary** — `contains`, `count`, and derived `isEmpty` for any set discipline.
+- **Canonical value domains** — elements conform to `Hash.Protocol`; counts use `Cardinal`.
+- **Storage-neutral carrier** — `__Set<Store>` owns an arbitrary store and can hand it back through consuming `take()`.
+- **Ownership propagation** — the carrier is `Copyable` and `Sendable` exactly when its store is.
 
 ---
 
@@ -22,17 +20,33 @@ The package also defines the `Set` namespace and the `Set.Protocol` membership c
 
 ```swift
 import Set
-import Column
-import Hash_Indexed_Primitive
-import Hash_Standard_Library_Integration
 
-// Move-only by default, over the ordered-hashed column:
-var seen = Set<Hash.Indexed<Column.Heap<Int>>>()
-seen.insert(200)
-seen.insert(404)
-seen.insert(200)                       // already present — ignored
-let hasError = seen.contains(404)      // true
-seen.forEach { print($0) }             // 200, 404 — insertion order
+struct UserID: Hash.Protocol {
+    let rawValue: Int
+
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.rawValue == rhs.rawValue
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(rawValue)
+    }
+}
+
+struct Users: Membership {
+    let values: [UserID]
+
+    func contains(_ element: borrowing UserID) -> Bool {
+        values.contains(element)
+    }
+
+    var count: Cardinal { Cardinal(UInt(values.count)) }
+}
+
+let users = Users(values: [UserID(rawValue: 1), UserID(rawValue: 2)])
+users.contains(UserID(rawValue: 2))  // true
+users.count                          // Cardinal(2)
+users.isEmpty                        // false
 ```
 
 ---
@@ -41,7 +55,7 @@ seen.forEach { print($0) }             // 200, 404 — insertion order
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/swift-molecules/swift-set.git", branch: "main")
+    .package(url: "https://github.com/swift-atoms/swift-set.git", branch: "main")
 ]
 ```
 
@@ -54,7 +68,7 @@ dependencies: [
 )
 ```
 
-The package is pre-1.0 — depend on `branch: "main"` until `0.1.0` is tagged. Requires Swift 6.3 and macOS 26 / iOS 26 / tvOS 26 / watchOS 26 / visionOS 26 (or the corresponding Linux / Windows toolchain).
+The package is pre-1.0 — depend on `branch: "main"` until `0.1.0` is tagged. Requires Swift 6.4 and macOS 27 / iOS 27 / tvOS 27 / watchOS 27 / visionOS 27 (or the corresponding Linux / Windows toolchain).
 
 ---
 
@@ -62,9 +76,11 @@ The package is pre-1.0 — depend on `branch: "main"` until `0.1.0` is tagged. R
 
 | Product | Contents | When to import |
 |---------|----------|----------------|
-| `Set` | Umbrella — `Set<S>`, the column constructors, the `Set.Protocol` contract, and the conformances | Most consumers |
-| `Set Primitive` | The `Set<S>` value type and its column-pinned surface, without the conformances | Move-only / minimal-surface use |
-| `Set Protocol` | The `Set.Protocol` membership contract (`contains` + `count`) | Authoring a set discipline |
+| `Set` | `Membership`, its `isEmpty` default, and the generic `__Set<Store>` carrier; re-exports `Hash` and `Cardinal` | Production consumers and set-discipline authors |
+| `Set Apple Foundation Integration` | Re-exports `Set` alongside Foundation | Apple-platform integration targets |
+| `Set Test Support` | Re-exports `Set` plus Hash and Cardinal standard-library integrations | Test targets |
+
+Foundation is confined to `Set Apple Foundation Integration`; the core and Test Support targets are Foundation-free.
 
 ---
 
@@ -72,20 +88,18 @@ The package is pre-1.0 — depend on `branch: "main"` until `0.1.0` is tagged. R
 
 | Platform         | CI  | Status       |
 |------------------|-----|--------------|
-| macOS 26         | Yes | Full support |
+| macOS 27         | Yes | Full support |
 | Linux            | Yes | Full support |
 | Windows          | Yes | Full support |
 | iOS/tvOS/watchOS | —   | Supported    |
-| Swift Embedded   | —   | Pending (nightly-toolchain follow-up) |
+| Swift Embedded   | —   | Targeted     |
 
 ---
 
 ## Related Packages
 
-- [`swift-set-algebra`](https://github.com/swift-molecules/swift-set-algebra) — relational and constructive algebra (`isSubset`, `union`, `intersection`, …) over any `Set.Protocol` conformer.
-- [`swift-set-ordered`](https://github.com/swift-molecules/swift-set-ordered) — the order-preserving `Set.Ordered` discipline with positional access.
-- [`swift-hash`](https://github.com/swift-molecules/swift-hash) — the `Hash.Key` element-hashing contract set elements conform to.
-- [`swift-column`](https://github.com/swift-molecules/swift-column) — the column vocabulary (`Hash.Indexed`, `Column.Heap`, …) the set composes.
+- [`swift-hash`](https://github.com/swift-atoms/swift-hash) — the element hashing contract used by `Membership`.
+- [`swift-cardinal`](https://github.com/swift-atoms/swift-cardinal) — the nonnegative count domain exposed by `Membership`.
 
 ---
 
