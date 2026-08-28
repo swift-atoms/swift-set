@@ -1,5 +1,6 @@
-public import Cardinal
 public import Hash
+public import Index
+import Set_Primitive
 
 public protocol Membership: ~Copyable {
 
@@ -7,5 +8,7 @@ public protocol Membership: ~Copyable {
 
     func contains(_ element: borrowing Element) -> Bool
 
-    var count: Cardinal { get }
+    var count: Index<Element>.Count { get }
 }
+
+public typealias __SetProtocol = Membership

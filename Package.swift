@@ -14,13 +14,18 @@ let package = Package(
     products: [
 
         .library(
-            name: "Set",
-            targets: ["Set"]
+            name: "Set Primitive",
+            targets: ["Set Primitive"]
         ),
 
         .library(
-            name: "Set Apple Foundation Integration",
-            targets: ["Set Apple Foundation Integration"]
+            name: "Set Protocol",
+            targets: ["Set Protocol"]
+        ),
+
+        .library(
+            name: "Set",
+            targets: ["Set"]
         ),
 
         .library(
@@ -30,41 +35,132 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            url: "https://github.com/swift-atoms/swift-cardinal.git",
+            url: "https://github.com/swift-molecules/swift-index.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-atoms/swift-hash.git",
+            url: "https://github.com/swift-molecules/swift-hash.git",
             branch: "main"
         ),
+        .package(
+            url: "https://github.com/swift-molecules/swift-hash-table.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-molecules/swift-ownership-shared.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-molecules/swift-buffer.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-molecules/swift-buffer-linear.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-molecules/swift-storage.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-molecules/swift-memory-heap.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-molecules/swift-memory-allocation.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-molecules/swift-ordinal.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-molecules/swift-tagged.git",
+            branch: "main"
+        ),
+
     ],
     targets: [
 
         .target(
-            name: "Set",
+            name: "Set Primitive",
             dependencies: [
-                .product(name: "Cardinal", package: "swift-cardinal"),
+                .product(name: "Hash Indexed Primitive", package: "swift-hash-table"),
+                .product(name: "Hash Table Primitive", package: "swift-hash-table"),
                 .product(name: "Hash", package: "swift-hash"),
+                .product(
+                    name: "Ownership Shared Primitive",
+                    package: "swift-ownership-shared"
+                ),
+                .product(name: "Buffer Primitive", package: "swift-buffer"),
+                .product(name: "Buffer Protocol", package: "swift-buffer"),
+                .product(
+                    name: "Buffer Linear Primitive",
+                    package: "swift-buffer-linear"
+                ),
+                .product(name: "Storage Primitive", package: "swift-storage"),
+                .product(
+                    name: "Storage Contiguous",
+                    package: "swift-storage"
+                ),
+                .product(name: "Store Protocol", package: "swift-storage"),
+                .product(name: "Memory Heap", package: "swift-memory-heap"),
+                .product(
+                    name: "Memory Allocator Primitive",
+                    package: "swift-memory-allocation"
+                ),
+                .product(name: "Index", package: "swift-index"),
             ]
         ),
 
         .target(
-            name: "Set Apple Foundation Integration",
-            dependencies: ["Set"]
+            name: "Set Protocol",
+            dependencies: [
+                "Set Primitive",
+                .product(name: "Hash", package: "swift-hash"),
+                .product(name: "Store Protocol", package: "swift-storage"),
+                .product(name: "Index", package: "swift-index"),
+            ]
+        ),
+
+        .target(
+            name: "Set",
+            dependencies: [
+                "Set Primitive",
+                "Set Protocol",
+                .product(name: "Hash Indexed Primitive", package: "swift-hash-table"),
+                .product(name: "Hash Table Primitive", package: "swift-hash-table"),
+                .product(name: "Hash", package: "swift-hash"),
+                .product(
+                    name: "Ownership Shared Primitive",
+                    package: "swift-ownership-shared"
+                ),
+                .product(name: "Buffer Primitive", package: "swift-buffer"),
+                .product(name: "Buffer Protocol", package: "swift-buffer"),
+                .product(
+                    name: "Buffer Linear Primitive",
+                    package: "swift-buffer-linear"
+                ),
+                .product(name: "Storage Primitive", package: "swift-storage"),
+                .product(
+                    name: "Storage Contiguous",
+                    package: "swift-storage"
+                ),
+                .product(name: "Store Protocol", package: "swift-storage"),
+                .product(name: "Memory Heap", package: "swift-memory-heap"),
+                .product(
+                    name: "Memory Allocator Primitive",
+                    package: "swift-memory-allocation"
+                ),
+                .product(name: "Index", package: "swift-index"),
+            ]
         ),
 
         .target(
             name: "Set Test Support",
             dependencies: [
                 "Set",
-                .product(
-                    name: "Cardinal Standard Library Integration",
-                    package: "swift-cardinal"
-                ),
-                .product(
-                    name: "Hash Standard Library Integration",
-                    package: "swift-hash"
-                ),
+                .product(name: "Index Test Support", package: "swift-index"),
             ],
             path: "Tests/Support"
         ),
@@ -74,6 +170,26 @@ let package = Package(
             dependencies: [
                 "Set",
                 "Set Test Support",
+                .product(
+                    name: "Hash Table Test Support",
+                    package: "swift-hash-table"
+                ),
+                .product(
+                    name: "Buffer Test Support",
+                    package: "swift-buffer"
+                ),
+                .product(
+                    name: "Hash Standard Library Integration",
+                    package: "swift-hash"
+                ),
+                .product(
+                    name: "Tagged Standard Library Integration",
+                    package: "swift-tagged"
+                ),
+                .product(
+                    name: "Ordinal Standard Library Integration",
+                    package: "swift-ordinal"
+                ),
             ]
         ),
     ],
