@@ -11,6 +11,20 @@ public struct __Set<S: ~Copyable>: ~Copyable {
     }
 
     @inlinable
+    public func withStore<R, Failure: Swift.Error>(
+        _ body: (borrowing S) throws(Failure) -> R
+    ) throws(Failure) -> R {
+        try body(store)
+    }
+
+    @inlinable
+    public mutating func withMutableStore<R, Failure: Swift.Error>(
+        _ body: (inout S) throws(Failure) -> R
+    ) throws(Failure) -> R {
+        try body(&store)
+    }
+
+    @inlinable
     public consuming func take() -> S {
         store
     }
