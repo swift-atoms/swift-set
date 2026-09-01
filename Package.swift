@@ -35,6 +35,10 @@ let package = Package(
     ],
     dependencies: [
         .package(
+            url: "https://github.com/swift-atoms/swift-store.git",
+            branch: "main"
+        ),
+        .package(
             url: "https://github.com/swift-atoms/swift-index.git",
             branch: "main"
         ),
@@ -99,11 +103,7 @@ let package = Package(
                     package: "swift-buffer-linear"
                 ),
                 .product(name: "Storage", package: "swift-storage"),
-                .product(
-                    name: "Storage Contiguous",
-                    package: "swift-storage"
-                ),
-                .product(name: "Store Protocol", package: "swift-storage"),
+                .product(name: "Store Protocol", package: "swift-store"),
                 .product(name: "Memory", package: "swift-memory"),
                 .product(
                     name: "Memory Allocator",
@@ -118,7 +118,7 @@ let package = Package(
             dependencies: [
                 "Set Primitive",
                 .product(name: "Hash", package: "swift-hash"),
-                .product(name: "Store Protocol", package: "swift-storage"),
+                .product(name: "Store Protocol", package: "swift-store"),
                 .product(name: "Index", package: "swift-index"),
             ]
         ),
@@ -142,11 +142,7 @@ let package = Package(
                     package: "swift-buffer-linear"
                 ),
                 .product(name: "Storage", package: "swift-storage"),
-                .product(
-                    name: "Storage Contiguous",
-                    package: "swift-storage"
-                ),
-                .product(name: "Store Protocol", package: "swift-storage"),
+                .product(name: "Store Protocol", package: "swift-store"),
                 .product(name: "Memory", package: "swift-memory"),
                 .product(
                     name: "Memory Allocator",
