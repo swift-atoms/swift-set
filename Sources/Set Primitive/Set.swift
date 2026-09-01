@@ -7,7 +7,7 @@ public import Index
 public import Memory_Allocator_Primitive
 public import Memory
 public import Ownership_Shared_Primitive
-public import Storage_Contiguous
+public import Storage
 public import Storage_Primitive
 
 @_documentation(visibility: public)
