@@ -1,7 +1,7 @@
-public import Buffer_Protocol
+public import Buffer
 public import Index
 public import Set_Primitive
-public import Store_Protocol
+public import Store
 
 extension __Set where S: ~Copyable, S: Store.`Protocol` & Buffer.`Protocol` {
 

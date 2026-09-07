@@ -8,7 +8,6 @@ public import Memory_Allocator
 public import Memory
 public import Ownership_Shared_Primitive
 public import Storage
-public import Storage
 
 @_documentation(visibility: public)
 @frozen
