@@ -3,17 +3,17 @@ import Buffer
 import Buffer_Test_Support
 import Hash_Indexed_Primitive
 import Hash
-import Hash_Standard_Library_Integration
+import Hash
 import Hash_Table_Primitive
 import Hash_Table_Test_Support
 import Index
 import Memory_Allocator
 import Memory
-import Ordinal_Standard_Library_Integration
+import Ordinal
 import Ownership_Shared_Primitive
 import Set
 import Storage
-import Tagged_Standard_Library_Integration
+import Tagged
 import Testing
 
 private typealias HeapStorage<E: ~Copyable> =
