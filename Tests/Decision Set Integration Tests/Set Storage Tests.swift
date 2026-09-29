@@ -59,7 +59,7 @@ private struct CopyStore: Store::Store.`Protocol` {
     }
 }
 
-private struct MetricStore: Store::Store.Protocol, Buffer.Protocol {
+private struct MetricStore: Store::Store.`Protocol`, Buffer.`Protocol` {
     var value = 0
     var count: Index<Int>.Count = .zero
     var capacity: Index<Int>.Count { 4 }
