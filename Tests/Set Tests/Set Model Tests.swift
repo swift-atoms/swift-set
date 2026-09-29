@@ -1,7 +1,6 @@
 import Buffer_Linear_Primitive
 import Buffer
 public import Buffer_Test_Support
-import Hash
 import Hash_Table_Test_Support
 import Index
 import Memory_Allocator
@@ -16,15 +15,15 @@ import Testing
 private typealias HeapStorage<E: ~Copyable> =
     Storage<Memory.Allocator<Memory.Heap>>.Contiguous<E>
 
-private typealias OrderedColumn<E: Hash.Key & ~Copyable> =
+private typealias OrderedColumn<E: Swift.Hashable & ~Copyable> =
     Hash.Indexed<Buffer<HeapStorage<E>>.Linear>
 
-private typealias MoveSet<E: Hash.Key & ~Copyable> = Set<E>
-private typealias CoWSet<E: Hash.Key & SendableMetatype> = __Set<
+private typealias MoveSet<E: Swift.Hashable & ~Copyable> = Set<E>
+private typealias CoWSet<E: Swift.Hashable & SendableMetatype> = __Set<
     Ownership.Shared<E, OrderedColumn<E>>
 >
 
-extension Model.Element.Tracked: @retroactive Hash.`Protocol` {
+extension Model.Element.Tracked: @retroactive Swift.Hashable {
 
     public borrowing func hash(into hasher: inout Hasher) {
         hasher.combine(group)
@@ -56,7 +55,7 @@ private final class Member {
     }
 }
 
-extension Member: Hash.`Protocol` {
+extension Member: Swift.Hashable {
     borrowing func hash(into hasher: inout Hasher) {
         hasher.combine(group)
     }

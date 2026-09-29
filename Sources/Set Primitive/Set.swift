@@ -1,13 +1,15 @@
 public import Buffer_Linear_Primitive
 public import Buffer
 public import Hash_Indexed_Primitive
-import Hash
-import Hash_Table_Primitive
+public import Hash_Table_Primitive
 public import Index
 public import Memory_Allocator
 public import Memory
 public import Ownership_Shared_Primitive
 public import Storage
+public import Cardinal
+public import Tagged
+public import Memory_Allocator_Protocol
 
 @_documentation(visibility: public)
 @frozen
@@ -34,14 +36,14 @@ extension __Set: Sendable where S: Sendable & ~Copyable {}
 extension __Set where S: ~Copyable {
 
     @inlinable
-    public init<E: Hash.Key & ~Copyable>(minimumCapacity: Index.Index<E>.Count = .zero)
+    public init<E: Swift.Hashable & ~Copyable>(minimumCapacity: Tagged<E, Cardinal> = .zero)
     where S == Hash.Indexed<Buffer<Storage<Memory.Allocator<Memory.Heap>>.Contiguous<E>>.Linear> {
         self.init(store: S(minimumCapacity: minimumCapacity))
     }
 
     @inlinable
-    public init<E: Hash.Key & SendableMetatype>(
-        minimumCapacity: Index.Index<E>.Count = .zero
+    public init<E: Swift.Hashable & SendableMetatype>(
+        minimumCapacity: Tagged<E, Cardinal> = .zero
     )
     where
         S == Ownership.Shared<
@@ -58,8 +60,8 @@ extension __Set where S: ~Copyable {
     }
 
     @inlinable
-    public init<E: Hash.Key & SendableMetatype & ~Copyable>(
-        minimumCapacity: Index.Index<E>.Count = .zero
+    public init<E: Swift.Hashable & SendableMetatype & ~Copyable>(
+        minimumCapacity: Tagged<E, Cardinal> = .zero
     )
     where
         S == Ownership.Shared<
