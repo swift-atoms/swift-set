@@ -1,5 +1,5 @@
 public import Buffer
-public import Index
+import Index
 public import Set_Primitive
 public import Store
 public import Cardinal
