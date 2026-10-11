@@ -38,6 +38,9 @@ private struct CopyStore: Store::Store.`Protocol` {
 
     var value = 7
     var unshareCount = 0
+}
+
+extension CopyStore {
 
     var capacity: Index<Int>.Count { Index<Int>.Count(1) }
 
@@ -62,6 +65,9 @@ private struct CopyStore: Store::Store.`Protocol` {
 private struct MetricStore: Store::Store.`Protocol`, Buffer.`Protocol` {
     var value = 0
     var count: Index<Int>.Count = .zero
+}
+
+extension MetricStore {
     var capacity: Index<Int>.Count { 4 }
     subscript(slot: Index<Int>) -> Int {
         get { value }

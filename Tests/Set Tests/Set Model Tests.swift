@@ -15,15 +15,15 @@ import Testing
 private typealias HeapStorage<E: ~Copyable> =
     Storage<Memory.Allocator<Memory.Heap>>.Contiguous<E>
 
-private typealias OrderedColumn<E: Swift.Hashable & ~Copyable> =
+private typealias OrderedColumn<E: Swift::Hashable & ~Copyable> =
     Hash.Indexed<Buffer<HeapStorage<E>>.Linear>
 
-private typealias MoveSet<E: Swift.Hashable & ~Copyable> = Set<E>
-private typealias CoWSet<E: Swift.Hashable & SendableMetatype> = __Set<
+private typealias MoveSet<E: Swift::Hashable & ~Copyable> = Set<E>
+private typealias CoWSet<E: Swift::Hashable & SendableMetatype> = __Set<
     Ownership.Shared<E, OrderedColumn<E>>
 >
 
-extension Model.Element.Tracked: @retroactive Swift.Hashable {
+extension Model.Element.Tracked: @retroactive Swift::Hashable {
 
     public borrowing func hash(into hasher: inout Hasher) {
         hasher.combine(group)
@@ -55,7 +55,7 @@ private final class Member {
     }
 }
 
-extension Member: Swift.Hashable {
+extension Member: Swift::Hashable {
     borrowing func hash(into hasher: inout Hasher) {
         hasher.combine(group)
     }
@@ -67,7 +67,7 @@ extension Member: Swift.Hashable {
 
 private struct Reference {
     var members: [(id: Int, group: Int)] = []
-    var ids: Swift.Set<Int> = []
+    var ids: Swift::Set<Int> = []
     var graveyard: [(id: Int, group: Int)] = []
 }
 

@@ -113,7 +113,7 @@ let package = Package(
         .target(
             name: "Set Protocol",
             dependencies: [
-                "Set Primitive",
+                .target(name: "Set Primitive"),
                 .product(name: "Store", package: "swift-store"),
                 .product(name: "Index", package: "swift-index"),
             ]
@@ -124,8 +124,8 @@ let package = Package(
             dependencies: [
                 .product(name: "Memory Allocator Protocol", package: "swift-memory-allocation"),
                 .product(name: "Buffer Linear", package: "swift-buffer-linear"),
-                "Set Primitive",
-                "Set Protocol",
+                .target(name: "Set Primitive"),
+                .target(name: "Set Protocol"),
                 .product(name: "Hash Indexed Primitive", package: "swift-hash-table"),
                 .product(name: "Hash Table Primitive", package: "swift-hash-table"),
                 .product(
@@ -151,7 +151,7 @@ let package = Package(
         .target(
             name: "Set Test Support",
             dependencies: [
-                "Set",
+                .target(name: "Set"),
                 .product(name: "Index Test Support", package: "swift-index"),
             ],
             path: "Tests/Support"
@@ -160,8 +160,8 @@ let package = Package(
         .testTarget(
             name: "Set Tests",
             dependencies: [
-                "Set",
-                "Set Test Support",
+                .target(name: "Set"),
+                .target(name: "Set Test Support"),
                 .product(
                     name: "Hash Table Test Support",
                     package: "swift-hash-table"
@@ -181,7 +181,7 @@ let package = Package(
             ]
         ),
 
-        .testTarget(name: "Decision Set Integration Tests", dependencies: ["Set", .product(name: "Cardinal", package: "swift-cardinal"), .product(name: "Ordinal", package: "swift-ordinal"), .product(name: "Tagged", package: "swift-tagged"), .product(name: "Index", package: "swift-index"), .product(name: "Storage", package: "swift-storage"), .product(name: "Store", package: "swift-store"), .product(name: "Buffer", package: "swift-buffer")], path: "Tests/Decision Set Integration Tests"),
+        .testTarget(name: "Decision Set Integration Tests", dependencies: [.target(name: "Set"), .product(name: "Cardinal", package: "swift-cardinal"), .product(name: "Ordinal", package: "swift-ordinal"), .product(name: "Tagged", package: "swift-tagged"), .product(name: "Index", package: "swift-index"), .product(name: "Storage", package: "swift-storage"), .product(name: "Store", package: "swift-store"), .product(name: "Buffer", package: "swift-buffer")], path: "Tests/Decision Set Integration Tests"),
     ],
     swiftLanguageModes: [.v6]
 )

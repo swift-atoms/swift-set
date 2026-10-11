@@ -17,11 +17,11 @@ import Testing
 private typealias HeapStorage<E: ~Copyable> =
     Storage<Memory.Allocator<Memory.Heap>>.Contiguous<E>
 
-private typealias OrderedColumn<E: Swift.Hashable & ~Copyable> =
+private typealias OrderedColumn<E: Swift::Hashable & ~Copyable> =
     Hash.Indexed<Buffer<HeapStorage<E>>.Linear>
 
-private typealias MoveSet<E: Swift.Hashable & ~Copyable> = Set<E>
-private typealias CoWSet<E: Swift.Hashable & SendableMetatype> = __Set<
+private typealias MoveSet<E: Swift::Hashable & ~Copyable> = Set<E>
+private typealias CoWSet<E: Swift::Hashable & SendableMetatype> = __Set<
     Ownership.Shared<E, OrderedColumn<E>>
 >
 
@@ -216,7 +216,7 @@ private struct SetItem: ~Copyable {
     deinit { SetProbe.recordDestroy(id) }
 }
 
-extension SetItem: Swift.Hashable {
+extension SetItem: Swift::Hashable {
     borrowing func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
@@ -241,7 +241,7 @@ private struct SetItem2: ~Copyable {
     deinit { SetProbe2.recordDestroy(id) }
 }
 
-extension SetItem2: Swift.Hashable {
+extension SetItem2: Swift::Hashable {
     borrowing func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }

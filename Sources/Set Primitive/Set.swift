@@ -22,6 +22,9 @@ public struct __Set<S: ~Copyable>: ~Copyable {
     public init(store: consuming S) {
         self.store = store
     }
+}
+
+extension __Set where S: ~Copyable {
 
     @inlinable
     public consuming func take() -> S {
@@ -36,13 +39,13 @@ extension __Set: Sendable where S: Sendable & ~Copyable {}
 extension __Set where S: ~Copyable {
 
     @inlinable
-    public init<E: Swift.Hashable & ~Copyable>(minimumCapacity: Tagged<E, Cardinal> = .zero)
+    public init<E: Swift::Hashable & ~Copyable>(minimumCapacity: Tagged<E, Cardinal> = .zero)
     where S == Hash.Indexed<Buffer<Storage<Memory.Allocator<Memory.Heap>>.Contiguous<E>>.Linear> {
         self.init(store: S(minimumCapacity: minimumCapacity))
     }
 
     @inlinable
-    public init<E: Swift.Hashable & SendableMetatype>(
+    public init<E: Swift::Hashable & SendableMetatype>(
         minimumCapacity: Tagged<E, Cardinal> = .zero
     )
     where
@@ -60,7 +63,7 @@ extension __Set where S: ~Copyable {
     }
 
     @inlinable
-    public init<E: Swift.Hashable & SendableMetatype & ~Copyable>(
+    public init<E: Swift::Hashable & SendableMetatype & ~Copyable>(
         minimumCapacity: Tagged<E, Cardinal> = .zero
     )
     where

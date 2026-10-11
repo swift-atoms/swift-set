@@ -3,7 +3,7 @@ import Set_Primitive
 
 public protocol Membership: ~Copyable {
 
-    associatedtype Element: Swift.Hashable & ~Copyable
+    associatedtype Element: Swift::Hashable & ~Copyable
 
     func contains(_ element: borrowing Element) -> Bool
 
