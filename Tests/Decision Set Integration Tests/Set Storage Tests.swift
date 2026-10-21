@@ -77,7 +77,10 @@ extension MetricStore {
         value = element
         count = .one
     }
-    mutating func move(at slot: Index<Int>) -> Int { count = .zero; return value }
+    mutating func move(at slot: Index<Int>) -> Int {
+        count = .zero
+        return value
+    }
     mutating func swapAt(_ i: Index<Int>, _ j: Index<Int>) {}
     mutating func unshare() {}
 }

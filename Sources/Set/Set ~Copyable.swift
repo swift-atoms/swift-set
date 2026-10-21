@@ -1,8 +1,8 @@
 public import Buffer
+public import Cardinal
 import Index
 public import Set_Primitive
 public import Store
-public import Cardinal
 public import Tagged
 
 extension __Set where S: ~Copyable, S: Store.`Protocol` & Buffer.`Protocol` {
