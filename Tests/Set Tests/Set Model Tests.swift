@@ -458,14 +458,18 @@ private func runFleetStream(seed: UInt64) -> Model.Verdict {
     return verdict
 }
 
-@Suite
-struct `Set Model` {
-    @Suite struct Unit {}
-    @Suite struct `Edge Case` {}
-    @Suite struct Integration {}
+enum `Set Model Tests` {}
+
+extension `Set Model Tests` {
+    @Suite
+    struct `Set Model` {
+        @Suite struct Unit {}
+        @Suite struct `Edge Case` {}
+        @Suite struct Integration {}
+    }
 }
 
-extension `Set Model`.Integration {
+extension `Set Model Tests`.`Set Model`.Integration {
     @Test(arguments: Model.seeds(default: [0x5E70_0001, 0x5E70_0002]))
     func `direct move-only stream: membership, order, and exact teardown`(seed: UInt64) {
         let verdict = runDirectStream(seed: seed)
@@ -481,7 +485,7 @@ extension `Set Model`.Integration {
     }
 }
 
-extension `Set Model`.Unit {
+extension `Set Model Tests`.`Set Model`.Unit {
     @Test
     func `direct clone detaches and stays order-coherent`() {
         var set = MoveSet<Model.Element.Tracked>(
@@ -506,7 +510,7 @@ extension `Set Model`.Unit {
     }
 }
 
-extension `Set Model`.`Edge Case` {
+extension `Set Model Tests`.`Set Model`.`Edge Case` {
     @Test
     func `duplicate hand-back returns the argument instance through the set door`() {
         let census = Model.Census()
