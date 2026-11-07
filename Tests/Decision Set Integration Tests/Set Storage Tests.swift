@@ -4,35 +4,33 @@ import Set
 import Store
 import Testing
 
-extension `Set Storage Tests`.`Set Storage Tests` {
-    @Suite
-    struct `Set Storage Tests` {
+@Suite
+struct `Set Storage Tests` {
 
-        @Test
-        func supportedStoreMetrics() {
-            var store = MetricStore()
-            store.initialize(at: .zero, to: 42)
-            let set = __Set(store: consume store)
+    @Test
+    func supportedStoreMetrics() {
+        var store = MetricStore()
+        store.initialize(at: .zero, to: 42)
+        let set = __Set(store: consume store)
 
-            let first: __Set<MetricStore>.Index = .zero
-            let count = set.count
-            let isEmpty = set.isEmpty
-            let capacity = set.capacity
+        let first: __Set<MetricStore>.Index = .zero
+        let count = set.count
+        let isEmpty = set.isEmpty
+        let capacity = set.capacity
 
-            #expect(first == .zero)
-            #expect(count == Index<Int>.Count(1))
-            #expect(!isEmpty)
-            #expect(capacity == Index<Int>.Count(4))
-        }
+        #expect(first == .zero)
+        #expect(count == Index<Int>.Count(1))
+        #expect(!isEmpty)
+        #expect(capacity == Index<Int>.Count(4))
+    }
 
-        @Test
-        func cloneUnsharesTheCopiedStore() {
-            let set = __Set(store: CopyStore())
-            let clone = set.clone()
+    @Test
+    func cloneUnsharesTheCopiedStore() {
+        let set = __Set(store: CopyStore())
+        let clone = set.clone()
 
-            #expect(set.take().unshareCount == 0)
-            #expect(clone.take().unshareCount == 1)
-        }
+        #expect(set.take().unshareCount == 0)
+        #expect(clone.take().unshareCount == 1)
     }
 }
 
