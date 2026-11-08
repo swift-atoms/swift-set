@@ -8,7 +8,7 @@ import Testing
 struct `Set Storage Tests` {
 
     @Test
-    func supportedStoreMetrics() {
+    func `supported store metrics`() {
         var store = MetricStore()
         store.initialize(at: .zero, to: 42)
         let set = __Set(store: consume store)
@@ -25,7 +25,7 @@ struct `Set Storage Tests` {
     }
 
     @Test
-    func cloneUnsharesTheCopiedStore() {
+    func `clone unshares the copied store`() {
         let set = __Set(store: CopyStore())
         let clone = set.clone()
 
